@@ -17,7 +17,7 @@ npm install simple-logto
 ## Basic Usage
 
 ```tsx
-import { UserCenter } from 'simple-logto'
+import { UserCenter } from '@ouim/simple-logto'
 
 function Header() {
   return (
@@ -128,7 +128,7 @@ When no user is signed in, shows:
 ### Basic Implementation
 
 ```tsx
-import { UserCenter } from 'simple-logto'
+import { UserCenter } from '@ouim/simple-logto'
 
 export default function Header() {
   return (
@@ -143,7 +143,7 @@ export default function Header() {
 ### With Custom Pages
 
 ```tsx
-import { UserCenter } from 'simple-logto'
+import { UserCenter } from '@ouim/simple-logto'
 import { Settings, User, CreditCard } from 'lucide-react'
 
 export default function Navigation() {
@@ -176,7 +176,7 @@ export default function Navigation() {
 ### Custom Styling
 
 ```tsx
-import { UserCenter } from 'simple-logto'
+import { UserCenter } from '@ouim/simple-logto'
 
 export default function ThemedHeader() {
   return (
@@ -193,7 +193,7 @@ export default function ThemedHeader() {
 ### Local Sign-Out Only
 
 ```tsx
-import { UserCenter } from 'simple-logto'
+import { UserCenter } from '@ouim/simple-logto'
 
 export default function Header() {
   return (
@@ -252,7 +252,7 @@ interface LogtoUser {
 You can use any icon library with `additionalPages`:
 
 ```tsx
-import { UserCenter } from 'simple-logto'
+import { UserCenter } from '@ouim/simple-logto'
 import { IoSettingsOutline, IoCreditCardOutline } from 'react-icons/io5'
 
 <UserCenter

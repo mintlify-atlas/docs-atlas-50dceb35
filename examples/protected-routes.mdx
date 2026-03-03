@@ -10,7 +10,7 @@ This guide demonstrates various patterns for protecting routes and implementing 
 The simplest way to protect a route is using the `middleware` option in the `useAuth` hook:
 
 ```tsx pages/Dashboard.tsx
-import { useAuth } from 'simple-logto'
+import { useAuth } from '@ouim/simple-logto'
 
 export default function Dashboard() {
   const { user, isLoadingUser } = useAuth({
@@ -38,7 +38,7 @@ export default function Dashboard() {
     Redirect authenticated users away from sign-in pages:
 
     ```tsx pages/Login.tsx
-    import { useAuth } from 'simple-logto'
+    import { useAuth } from '@ouim/simple-logto'
 
     export default function Login() {
       const { user, isLoadingUser } = useAuth({
@@ -64,7 +64,7 @@ export default function Dashboard() {
     Use custom navigation options for more control:
 
     ```tsx pages/Settings.tsx
-    import { useAuth } from 'simple-logto'
+    import { useAuth } from '@ouim/simple-logto'
 
     export default function Settings() {
       const { user, isLoadingUser } = useAuth({
@@ -94,7 +94,7 @@ export default function Dashboard() {
     Implement complex access control logic:
 
     ```tsx pages/AdminPanel.tsx
-    import { useAuth } from 'simple-logto'
+    import { useAuth } from '@ouim/simple-logto'
     import { useEffect } from 'react'
     import { useNavigate } from 'react-router-dom'
 
@@ -137,7 +137,7 @@ Create a reusable route guard component for cleaner code:
 <Steps>
   <Step title="Create Route Guard Component">
     ```tsx components/RouteGuard.tsx
-    import { useAuth } from 'simple-logto'
+    import { useAuth } from '@ouim/simple-logto'
     import { ReactNode } from 'react'
 
     interface RouteGuardProps {
@@ -174,7 +174,7 @@ Create a reusable route guard component for cleaner code:
   <Step title="Use Route Guard">
     ```tsx pages/Profile.tsx
     import { RouteGuard } from '../components/RouteGuard'
-    import { useAuth } from 'simple-logto'
+    import { useAuth } from '@ouim/simple-logto'
 
     export default function Profile() {
       const { user } = useAuth()
@@ -198,7 +198,7 @@ Create a reusable route guard component for cleaner code:
 Protect routes at the router level:
 
 ```tsx App.tsx
-import { AuthProvider, useAuth } from 'simple-logto'
+import { AuthProvider, useAuth } from '@ouim/simple-logto'
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { ReactNode } from 'react'
 
@@ -268,7 +268,7 @@ For Next.js applications, use client-side protection:
     ```tsx app/dashboard/layout.tsx
     'use client'
 
-    import { useAuth } from 'simple-logto'
+    import { useAuth } from '@ouim/simple-logto'
     import { useRouter } from 'next/navigation'
     import { useEffect } from 'react'
 
@@ -305,7 +305,7 @@ For Next.js applications, use client-side protection:
 
   <Tab title="Pages Router">
     ```tsx pages/dashboard.tsx
-    import { useAuth } from 'simple-logto'
+    import { useAuth } from '@ouim/simple-logto'
     import { useRouter } from 'next/router'
     import { useEffect } from 'react'
 
@@ -343,7 +343,7 @@ For Next.js applications, use client-side protection:
 Implement role-based access control (RBAC):
 
 ```tsx hooks/useRBAC.ts
-import { useAuth } from 'simple-logto'
+import { useAuth } from '@ouim/simple-logto'
 import { useMemo } from 'react'
 
 type Role = 'admin' | 'user' | 'moderator'
@@ -381,7 +381,7 @@ export function useRBAC() {
 Use the RBAC hook in your components:
 
 ```tsx pages/AdminDashboard.tsx
-import { useAuth } from 'simple-logto'
+import { useAuth } from '@ouim/simple-logto'
 import { useRBAC } from '../hooks/useRBAC'
 import { useNavigate } from 'react-router-dom'
 import { useEffect } from 'react'
@@ -422,7 +422,7 @@ export default function AdminDashboard() {
 Handle loading states elegantly:
 
 ```tsx components/ProtectedPage.tsx
-import { useAuth } from 'simple-logto'
+import { useAuth } from '@ouim/simple-logto'
 import { ReactNode } from 'react'
 
 interface ProtectedPageProps {

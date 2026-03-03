@@ -17,7 +17,7 @@ npm install simple-logto
 ## Basic Usage
 
 ```tsx
-import { useAuth } from 'simple-logto'
+import { useAuth } from '@ouim/simple-logto'
 
 function MyComponent() {
   const { user, isLoadingUser, signIn, signOut } = useAuth()
@@ -197,7 +197,7 @@ interface AuthContextType {
 ### Display User Information
 
 ```tsx
-import { useAuth } from 'simple-logto'
+import { useAuth } from '@ouim/simple-logto'
 
 function UserProfile() {
   const { user, isLoadingUser } = useAuth()
@@ -224,7 +224,7 @@ function UserProfile() {
 ### Protected Page
 
 ```tsx
-import { useAuth } from 'simple-logto'
+import { useAuth } from '@ouim/simple-logto'
 
 export default function DashboardPage() {
   const { user } = useAuth({
@@ -245,7 +245,7 @@ export default function DashboardPage() {
 ### Guest-Only Page
 
 ```tsx
-import { useAuth } from 'simple-logto'
+import { useAuth } from '@ouim/simple-logto'
 
 export default function LoginPage() {
   const { signIn } = useAuth({
@@ -265,7 +265,7 @@ export default function LoginPage() {
 ### Custom Sign-In Button
 
 ```tsx
-import { useAuth } from 'simple-logto'
+import { useAuth } from '@ouim/simple-logto'
 
 function SignInButton() {
   const { signIn, isLoadingUser } = useAuth()
@@ -284,7 +284,7 @@ function SignInButton() {
 ### Sign-Out with Confirmation
 
 ```tsx
-import { useAuth } from 'simple-logto'
+import { useAuth } from '@ouim/simple-logto'
 
 function SignOutButton() {
   const { signOut } = useAuth()
@@ -302,7 +302,7 @@ function SignOutButton() {
 ### Conditional Rendering
 
 ```tsx
-import { useAuth } from 'simple-logto'
+import { useAuth } from '@ouim/simple-logto'
 
 function Navigation() {
   const { user, signIn, signOut } = useAuth()
@@ -327,7 +327,7 @@ function Navigation() {
 ### Manual Auth Refresh
 
 ```tsx
-import { useAuth } from 'simple-logto'
+import { useAuth } from '@ouim/simple-logto'
 
 function ProfilePage() {
   const { user, refreshAuth } = useAuth({ middleware: 'auth' })
@@ -352,7 +352,7 @@ function ProfilePage() {
 ### With Loading State
 
 ```tsx
-import { useAuth } from 'simple-logto'
+import { useAuth } from '@ouim/simple-logto'
 
 function App() {
   const { user, isLoadingUser, signIn, signOut } = useAuth()
@@ -451,7 +451,7 @@ useEffect(() => {
 The hook is fully typed:
 
 ```typescript
-import { useAuth, type AuthOptions, type AuthContextType } from 'simple-logto'
+import { useAuth, type AuthOptions, type AuthContextType } from '@ouim/simple-logto'
 
 const options: AuthOptions = {
   middleware: 'auth',

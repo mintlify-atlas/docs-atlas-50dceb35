@@ -23,7 +23,7 @@ The simplest and most declarative approach using the `useAuth` hook's built-in m
 ### Protected Route (Auth Required)
 
 ```tsx app/dashboard/page.tsx
-import { useAuth } from 'simple-logto'
+import { useAuth } from '@ouim/simple-logto'
 
 export default function DashboardPage() {
   const { user } = useAuth({
@@ -45,7 +45,7 @@ export default function DashboardPage() {
 ### Guest-Only Route
 
 ```tsx app/login/page.tsx
-import { useAuth } from 'simple-logto'
+import { useAuth } from '@ouim/simple-logto'
 
 export default function LoginPage() {
   const { signIn } = useAuth({
@@ -71,7 +71,7 @@ For more control over the protection logic and UI.
 ### With Loading and Redirect
 
 ```tsx
-import { useAuth } from 'simple-logto'
+import { useAuth } from '@ouim/simple-logto'
 import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
 
@@ -105,7 +105,7 @@ export default function ProtectedPage() {
 ### With Error Message
 
 ```tsx
-import { useAuth } from 'simple-logto'
+import { useAuth } from '@ouim/simple-logto'
 
 export default function ProtectedPage() {
   const { user, isLoadingUser, signIn } = useAuth()
@@ -148,7 +148,7 @@ Create reusable protection wrappers.
 ### Protected Page HOC
 
 ```tsx lib/withAuth.tsx
-import { useAuth } from 'simple-logto'
+import { useAuth } from '@ouim/simple-logto'
 import { useRouter } from 'next/navigation'
 import { useEffect, ComponentType } from 'react'
 
@@ -195,7 +195,7 @@ export default withAuth(DashboardPage)
 ### Guest-Only HOC
 
 ```tsx lib/withGuest.tsx
-import { useAuth } from 'simple-logto'
+import { useAuth } from '@ouim/simple-logto'
 import { useRouter } from 'next/navigation'
 import { useEffect, ComponentType } from 'react'
 
@@ -244,7 +244,7 @@ export default withGuest(LoginPage)
 ### Role-Based Protection
 
 ```tsx
-import { useAuth } from 'simple-logto'
+import { useAuth } from '@ouim/simple-logto'
 import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
 
@@ -281,7 +281,7 @@ export default function AdminPage() {
 ### Permission-Based Protection
 
 ```tsx
-import { useAuth } from 'simple-logto'
+import { useAuth } from '@ouim/simple-logto'
 
 function hasPermission(user: any, permission: string): boolean {
   return user?.permissions?.includes(permission) ?? false
@@ -325,7 +325,7 @@ export default function SettingsPage() {
 ### Conditional Component Rendering
 
 ```tsx
-import { useAuth } from 'simple-logto'
+import { useAuth } from '@ouim/simple-logto'
 
 function ProtectedSection({ children }: { children: React.ReactNode }) {
   const { user, isLoadingUser } = useAuth()
@@ -362,7 +362,7 @@ export default function Page() {
 ```tsx app/dashboard/layout.tsx
 'use client'
 
-import { useAuth } from 'simple-logto'
+import { useAuth } from '@ouim/simple-logto'
 
 export default function DashboardLayout({
   children,
@@ -404,7 +404,7 @@ export default function DashboardLayout({
 Control how redirects behave:
 
 ```tsx
-import { useAuth } from 'simple-logto'
+import { useAuth } from '@ouim/simple-logto'
 
 export default function Page() {
   const { user } = useAuth({

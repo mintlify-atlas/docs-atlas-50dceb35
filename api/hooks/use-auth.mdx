@@ -105,7 +105,7 @@ function useAuth(options?: AuthOptions): AuthContextType
 ### Basic Usage
 
 ```tsx
-import { useAuth } from 'simple-logto'
+import { useAuth } from '@ouim/simple-logto'
 
 function Profile() {
   const { user, isLoadingUser } = useAuth()
@@ -130,7 +130,7 @@ function Profile() {
 ### Protected Route
 
 ```tsx
-import { useAuth } from 'simple-logto'
+import { useAuth } from '@ouim/simple-logto'
 
 function Dashboard() {
   const { user, signOut } = useAuth({
@@ -151,7 +151,7 @@ function Dashboard() {
 ### Guest-Only Route
 
 ```tsx
-import { useAuth } from 'simple-logto'
+import { useAuth } from '@ouim/simple-logto'
 
 function Login() {
   const { signIn } = useAuth({
@@ -171,7 +171,7 @@ function Login() {
 ### Custom Navigation Options
 
 ```tsx
-import { useAuth } from 'simple-logto'
+import { useAuth } from '@ouim/simple-logto'
 
 function ProtectedPage() {
   const { user } = useAuth({

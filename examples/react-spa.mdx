@@ -20,7 +20,7 @@ This example demonstrates how to build a complete React SPA with authentication 
     Wrap your app with the `AuthProvider` to enable authentication throughout your application:
 
     ```tsx App.tsx
-    import { AuthProvider } from 'simple-logto'
+    import { AuthProvider } from '@ouim/simple-logto'
     import { BrowserRouter, Routes, Route } from 'react-router-dom'
     import Home from './pages/Home'
     import Dashboard from './pages/Dashboard'
@@ -59,7 +59,7 @@ This example demonstrates how to build a complete React SPA with authentication 
     Build a landing page with sign-in functionality:
 
     ```tsx pages/Home.tsx
-    import { useAuth, UserCenter } from 'simple-logto'
+    import { useAuth, UserCenter } from '@ouim/simple-logto'
     import { useNavigate } from 'react-router-dom'
 
     export default function Home() {
@@ -138,7 +138,7 @@ This example demonstrates how to build a complete React SPA with authentication 
     Build a protected dashboard page that requires authentication:
 
     ```tsx pages/Dashboard.tsx
-    import { useAuth, UserCenter } from 'simple-logto'
+    import { useAuth, UserCenter } from '@ouim/simple-logto'
     import { useNavigate } from 'react-router-dom'
 
     export default function Dashboard() {
@@ -219,7 +219,7 @@ This example demonstrates how to build a complete React SPA with authentication 
 
     <CodeGroup>
       ```tsx pages/Callback.tsx
-      import { CallbackPage } from 'simple-logto'
+      import { CallbackPage } from '@ouim/simple-logto'
 
       export default function Callback() {
         return (
@@ -236,7 +236,7 @@ This example demonstrates how to build a complete React SPA with authentication 
       ```
 
       ```tsx pages/SignIn.tsx
-      import { SignInPage } from 'simple-logto'
+      import { SignInPage } from '@ouim/simple-logto'
 
       export default function SignIn() {
         return <SignInPage />

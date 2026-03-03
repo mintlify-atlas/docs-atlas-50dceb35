@@ -21,7 +21,7 @@ npm install simple-logto
 Wrap your application with `AuthProvider` at the root level:
 
 ```tsx
-import { AuthProvider } from 'simple-logto'
+import { AuthProvider } from '@ouim/simple-logto'
 
 function App() {
   return (
@@ -163,7 +163,7 @@ The provider includes robust error handling:
 ### Next.js App Router
 
 ```tsx app/layout.tsx
-import { AuthProvider } from 'simple-logto'
+import { AuthProvider } from '@ouim/simple-logto'
 
 export default function RootLayout({
   children,
@@ -195,7 +195,7 @@ export default function RootLayout({
 ```tsx
 'use client'
 
-import { AuthProvider } from 'simple-logto'
+import { AuthProvider } from '@ouim/simple-logto'
 import { useRouter } from 'next/navigation'
 
 export function AuthProviderWrapper({ children }: { children: React.ReactNode }) {

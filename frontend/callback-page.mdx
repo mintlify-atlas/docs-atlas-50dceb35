@@ -19,7 +19,7 @@ npm install simple-logto
 Create a callback route in your application:
 
 ```tsx app/callback/page.tsx
-import { CallbackPage } from 'simple-logto'
+import { CallbackPage } from '@ouim/simple-logto'
 
 export default function Callback() {
   return <CallbackPage />
@@ -169,7 +169,7 @@ if (!isPopup) {
 ### Basic Setup (Next.js App Router)
 
 ```tsx app/callback/page.tsx
-import { CallbackPage } from 'simple-logto'
+import { CallbackPage } from '@ouim/simple-logto'
 
 export default function Callback() {
   return <CallbackPage />
@@ -179,7 +179,7 @@ export default function Callback() {
 ### With Custom Loading State
 
 ```tsx
-import { CallbackPage } from 'simple-logto'
+import { CallbackPage } from '@ouim/simple-logto'
 import { Loader2 } from 'lucide-react'
 
 export default function Callback() {
@@ -200,7 +200,7 @@ export default function Callback() {
 ### With Success Tracking
 
 ```tsx
-import { CallbackPage } from 'simple-logto'
+import { CallbackPage } from '@ouim/simple-logto'
 import { useRouter } from 'next/navigation'
 
 export default function Callback() {
@@ -230,7 +230,7 @@ export default function Callback() {
 ### Custom Styling
 
 ```tsx
-import { CallbackPage } from 'simple-logto'
+import { CallbackPage } from '@ouim/simple-logto'
 
 export default function Callback() {
   return (
@@ -254,7 +254,7 @@ export default function Callback() {
 ### With Custom Redirect
 
 ```tsx
-import { CallbackPage } from 'simple-logto'
+import { CallbackPage } from '@ouim/simple-logto'
 
 export default function Callback() {
   return (
@@ -305,7 +305,7 @@ For popup flows, your sign-in page should set a flag:
 'use client'
 
 import { useEffect } from 'react'
-import { useAuth } from 'simple-logto'
+import { useAuth } from '@ouim/simple-logto'
 import { useSearchParams } from 'next/navigation'
 
 export default function SignIn() {

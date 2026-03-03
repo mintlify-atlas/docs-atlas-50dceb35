@@ -1,9 +1,9 @@
 ---
 title: "Cookie Utilities"
-description: "Client-side cookie management utilities for authentication and guest tracking"
+description: "Client-side cookie management utilities for authentication"
 ---
 
-Utilities for managing cookies, JWT tokens, and guest user tracking in Simple Logto applications.
+Utilities for managing cookies and JWT tokens in Simple Logto applications.
 
 ## Cookie Utilities
 
@@ -66,7 +66,7 @@ cookieUtils.setCookie(
 **Example:**
 
 ```typescript
-import { cookieUtils } from 'simple-logto'
+import { cookieUtils } from '@ouim/simple-logto'
 
 // Set a cookie that expires in 7 days
 cookieUtils.setCookie('user_preference', 'dark-mode', {
@@ -99,7 +99,7 @@ cookieUtils.getCookie(name: string): string | null
 **Example:**
 
 ```typescript
-import { cookieUtils } from 'simple-logto'
+import { cookieUtils } from '@ouim/simple-logto'
 
 const preference = cookieUtils.getCookie('user_preference')
 if (preference === 'dark-mode') {
@@ -139,7 +139,7 @@ cookieUtils.removeCookie(
 **Example:**
 
 ```typescript
-import { cookieUtils } from 'simple-logto'
+import { cookieUtils } from '@ouim/simple-logto'
 
 cookieUtils.removeCookie('user_preference', { path: '/' })
 ```
@@ -170,7 +170,7 @@ jwtCookieUtils.saveToken(token: string): void
 **Example:**
 
 ```typescript
-import { jwtCookieUtils } from 'simple-logto'
+import { jwtCookieUtils } from '@ouim/simple-logto'
 
 // After successful authentication
 const token = await getAccessToken()
@@ -190,7 +190,7 @@ jwtCookieUtils.getToken(): string | null
 **Example:**
 
 ```typescript
-import { jwtCookieUtils } from 'simple-logto'
+import { jwtCookieUtils } from '@ouim/simple-logto'
 
 const token = jwtCookieUtils.getToken()
 if (token) {
@@ -214,7 +214,7 @@ jwtCookieUtils.removeToken(): void
 **Example:**
 
 ```typescript
-import { jwtCookieUtils } from 'simple-logto'
+import { jwtCookieUtils } from '@ouim/simple-logto'
 
 // On sign out
 function handleSignOut() {
@@ -223,125 +223,7 @@ function handleSignOut() {
 }
 ```
 
-## Guest Utilities
-
-Utilities for managing guest user sessions using browser fingerprinting.
-
-### guestUtils.generateGuestId
-
-Generate a unique guest ID using browser fingerprinting.
-
-```typescript
-async guestUtils.generateGuestId(): Promise<string>
-```
-
-**Returns:** `Promise<string>` - A unique guest identifier
-
-Uses FingerprintJS for stable browser identification, with fallback to UUID generation if fingerprinting fails.
-
-**Example:**
-
-```typescript
-import { guestUtils } from 'simple-logto'
-
-const guestId = await guestUtils.generateGuestId()
-console.log('Guest ID:', guestId)
-```
-
-### guestUtils.getGuestId
-
-Retrieve the guest ID from the cookie.
-
-```typescript
-guestUtils.getGuestId(): string | null
-```
-
-**Returns:** `string | null` - The guest ID, or `null` if not found
-
-**Example:**
-
-```typescript
-import { guestUtils } from 'simple-logto'
-
-const guestId = guestUtils.getGuestId()
-if (guestId) {
-  console.log('Existing guest:', guestId)
-}
-```
-
-### guestUtils.setGuestId
-
-Set a guest ID cookie, generating one if not provided.
-
-```typescript
-async guestUtils.setGuestId(guestId?: string): Promise<string>
-```
-
-<ResponseField name="guestId" type="string">
-  Optional guest ID to set. If not provided, a new one will be generated.
-</ResponseField>
-
-**Returns:** `Promise<string>` - The guest ID that was set
-
-**Cookie details:**
-- Name: `guest_logto_authtoken`
-- Expires: 7 days
-- SameSite: Strict
-- Path: /
-
-**Example:**
-
-```typescript
-import { guestUtils } from 'simple-logto'
-
-// Set a specific guest ID
-await guestUtils.setGuestId('custom-guest-id')
-
-// Generate and set a new guest ID
-const newGuestId = await guestUtils.setGuestId()
-```
-
-### guestUtils.ensureGuestId
-
-Ensure a guest ID exists, creating one if needed.
-
-```typescript
-async guestUtils.ensureGuestId(): Promise<string>
-```
-
-**Returns:** `Promise<string>` - The existing or newly created guest ID
-
-**Example:**
-
-```typescript
-import { guestUtils } from 'simple-logto'
-
-// Always returns a valid guest ID
-const guestId = await guestUtils.ensureGuestId()
-console.log('Guest ID:', guestId)
-```
-
-### guestUtils.clearGuestId
-
-Remove the guest ID cookie.
-
-```typescript
-guestUtils.clearGuestId(): void
-```
-
-**Example:**
-
-```typescript
-import { guestUtils } from 'simple-logto'
-
-// Clear guest session on user sign-in
-function handleUserSignIn() {
-  guestUtils.clearGuestId()
-  // Proceed with authentication
-}
-```
-
-## Other Utilities
+## Configuration Validation
 
 ### validateLogtoConfig
 
@@ -360,7 +242,7 @@ validateLogtoConfig(config: LogtoConfig): void
 **Example:**
 
 ```typescript
-import { validateLogtoConfig } from 'simple-logto'
+import { validateLogtoConfig } from '@ouim/simple-logto'
 import type { LogtoConfig } from '@logto/react'
 
 const config: LogtoConfig = {
@@ -377,84 +259,6 @@ try {
 }
 ```
 
-### transformUser
-
-Transform Logto user object to a simpler format.
-
-```typescript
-transformUser(logtoUser: any): LogtoUser | null
-```
-
-<ResponseField name="logtoUser" type="any" required>
-  The raw user object from Logto
-</ResponseField>
-
-**Returns:** `LogtoUser | null` - Transformed user object, or `null` if input is invalid
-
-**Example:**
-
-```typescript
-import { transformUser } from 'simple-logto'
-
-const rawUser = {
-  sub: 'user-123',
-  name: 'John Doe',
-  email: 'john@example.com',
-  picture: 'https://example.com/avatar.jpg'
-}
-
-const user = transformUser(rawUser)
-// { id: 'user-123', name: 'John Doe', email: 'john@example.com', avatar: 'https://example.com/avatar.jpg', ... }
-```
-
-### getInitials
-
-Get initials from a name for avatar fallback.
-
-```typescript
-getInitials(name?: string): string
-```
-
-<ResponseField name="name" type="string">
-  The user's name
-</ResponseField>
-
-**Returns:** `string` - Initials (1-2 characters, uppercase)
-
-**Example:**
-
-```typescript
-import { getInitials } from 'simple-logto'
-
-getInitials('John Doe')        // 'JD'
-getInitials('Alice')           // 'AL'
-getInitials('Bob Smith Jr')    // 'BJ'
-getInitials()                  // 'U'
-```
-
-### cn
-
-Utility function to combine class names using clsx and tailwind-merge.
-
-```typescript
-cn(...inputs: ClassValue[]): string
-```
-
-<ResponseField name="inputs" type="ClassValue[]" required>
-  Class names to combine
-</ResponseField>
-
-**Returns:** `string` - Merged class names
-
-**Example:**
-
-```typescript
-import { cn } from 'simple-logto'
-
-const className = cn(
-  'base-class',
-  isActive && 'active-class',
-  { 'conditional-class': condition },
-  'another-class'
-)
-```
+<Note>
+  The library uses internal utilities for transforming user data and generating guest IDs. These utilities are used automatically by the AuthProvider and do not need to be called directly.
+</Note>
