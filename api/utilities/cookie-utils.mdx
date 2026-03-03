@@ -1,0 +1,460 @@
+---
+title: "Cookie Utilities"
+description: "Client-side cookie management utilities for authentication and guest tracking"
+---
+
+Utilities for managing cookies, JWT tokens, and guest user tracking in Simple Logto applications.
+
+## Cookie Utilities
+
+General-purpose cookie management functions.
+
+### cookieUtils.setCookie
+
+Set a cookie with the given name, value, and options.
+
+```typescript
+cookieUtils.setCookie(
+  name: string,
+  value: string,
+  options?: CookieOptions
+): void
+```
+
+<ResponseField name="name" type="string" required>
+  The cookie name
+</ResponseField>
+
+<ResponseField name="value" type="string" required>
+  The cookie value
+</ResponseField>
+
+<ResponseField name="options" type="CookieOptions">
+  Cookie configuration options
+</ResponseField>
+
+#### CookieOptions
+
+<ResponseField name="expires" type="Date | number">
+  Expiration date (Date object) or number of days until expiration
+</ResponseField>
+
+<ResponseField name="maxAge" type="number">
+  Maximum age in seconds
+</ResponseField>
+
+<ResponseField name="domain" type="string">
+  Cookie domain
+</ResponseField>
+
+<ResponseField name="path" type="string" default="/">
+  Cookie path
+</ResponseField>
+
+<ResponseField name="secure" type="boolean" default="window.location.protocol === 'https:'">
+  Whether cookie requires HTTPS
+</ResponseField>
+
+<ResponseField name="sameSite" type="'strict' | 'lax' | 'none'" default="lax">
+  SameSite cookie attribute
+</ResponseField>
+
+<ResponseField name="httpOnly" type="boolean">
+  Whether cookie is HTTP-only (not accessible via JavaScript)
+</ResponseField>
+
+**Example:**
+
+```typescript
+import { cookieUtils } from 'simple-logto'
+
+// Set a cookie that expires in 7 days
+cookieUtils.setCookie('user_preference', 'dark-mode', {
+  expires: 7,
+  secure: true,
+  sameSite: 'strict'
+})
+
+// Set a cookie with a specific expiration date
+cookieUtils.setCookie('session', 'abc123', {
+  expires: new Date('2026-12-31'),
+  path: '/'
+})
+```
+
+### cookieUtils.getCookie
+
+Get a cookie value by name.
+
+```typescript
+cookieUtils.getCookie(name: string): string | null
+```
+
+<ResponseField name="name" type="string" required>
+  The cookie name to retrieve
+</ResponseField>
+
+**Returns:** `string | null` - The cookie value, or `null` if not found
+
+**Example:**
+
+```typescript
+import { cookieUtils } from 'simple-logto'
+
+const preference = cookieUtils.getCookie('user_preference')
+if (preference === 'dark-mode') {
+  // Enable dark mode
+}
+```
+
+### cookieUtils.removeCookie
+
+Remove a cookie by name.
+
+```typescript
+cookieUtils.removeCookie(
+  name: string,
+  options?: RemoveCookieOptions
+): void
+```
+
+<ResponseField name="name" type="string" required>
+  The cookie name to remove
+</ResponseField>
+
+<ResponseField name="options" type="RemoveCookieOptions">
+  Cookie removal options (domain and path must match the original cookie)
+</ResponseField>
+
+#### RemoveCookieOptions
+
+<ResponseField name="domain" type="string">
+  Cookie domain (must match original)
+</ResponseField>
+
+<ResponseField name="path" type="string" default="/">
+  Cookie path (must match original)
+</ResponseField>
+
+**Example:**
+
+```typescript
+import { cookieUtils } from 'simple-logto'
+
+cookieUtils.removeCookie('user_preference', { path: '/' })
+```
+
+## JWT Token Utilities
+
+Specialized utilities for managing JWT authentication tokens.
+
+### jwtCookieUtils.saveToken
+
+Save a JWT token to a secure cookie.
+
+```typescript
+jwtCookieUtils.saveToken(token: string): void
+```
+
+<ResponseField name="token" type="string" required>
+  The JWT token to save
+</ResponseField>
+
+**Cookie details:**
+- Name: `logto_authtoken`
+- Expires: 7 days
+- Secure: true (HTTPS only)
+- SameSite: strict
+- Path: /
+
+**Example:**
+
+```typescript
+import { jwtCookieUtils } from 'simple-logto'
+
+// After successful authentication
+const token = await getAccessToken()
+jwtCookieUtils.saveToken(token)
+```
+
+### jwtCookieUtils.getToken
+
+Retrieve the JWT token from the cookie.
+
+```typescript
+jwtCookieUtils.getToken(): string | null
+```
+
+**Returns:** `string | null` - The JWT token, or `null` if not found
+
+**Example:**
+
+```typescript
+import { jwtCookieUtils } from 'simple-logto'
+
+const token = jwtCookieUtils.getToken()
+if (token) {
+  // Make authenticated API request
+  fetch('/api/user', {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  })
+}
+```
+
+### jwtCookieUtils.removeToken
+
+Remove the JWT token cookie.
+
+```typescript
+jwtCookieUtils.removeToken(): void
+```
+
+**Example:**
+
+```typescript
+import { jwtCookieUtils } from 'simple-logto'
+
+// On sign out
+function handleSignOut() {
+  jwtCookieUtils.removeToken()
+  // Redirect to login page
+}
+```
+
+## Guest Utilities
+
+Utilities for managing guest user sessions using browser fingerprinting.
+
+### guestUtils.generateGuestId
+
+Generate a unique guest ID using browser fingerprinting.
+
+```typescript
+async guestUtils.generateGuestId(): Promise<string>
+```
+
+**Returns:** `Promise<string>` - A unique guest identifier
+
+Uses FingerprintJS for stable browser identification, with fallback to UUID generation if fingerprinting fails.
+
+**Example:**
+
+```typescript
+import { guestUtils } from 'simple-logto'
+
+const guestId = await guestUtils.generateGuestId()
+console.log('Guest ID:', guestId)
+```
+
+### guestUtils.getGuestId
+
+Retrieve the guest ID from the cookie.
+
+```typescript
+guestUtils.getGuestId(): string | null
+```
+
+**Returns:** `string | null` - The guest ID, or `null` if not found
+
+**Example:**
+
+```typescript
+import { guestUtils } from 'simple-logto'
+
+const guestId = guestUtils.getGuestId()
+if (guestId) {
+  console.log('Existing guest:', guestId)
+}
+```
+
+### guestUtils.setGuestId
+
+Set a guest ID cookie, generating one if not provided.
+
+```typescript
+async guestUtils.setGuestId(guestId?: string): Promise<string>
+```
+
+<ResponseField name="guestId" type="string">
+  Optional guest ID to set. If not provided, a new one will be generated.
+</ResponseField>
+
+**Returns:** `Promise<string>` - The guest ID that was set
+
+**Cookie details:**
+- Name: `guest_logto_authtoken`
+- Expires: 7 days
+- SameSite: Strict
+- Path: /
+
+**Example:**
+
+```typescript
+import { guestUtils } from 'simple-logto'
+
+// Set a specific guest ID
+await guestUtils.setGuestId('custom-guest-id')
+
+// Generate and set a new guest ID
+const newGuestId = await guestUtils.setGuestId()
+```
+
+### guestUtils.ensureGuestId
+
+Ensure a guest ID exists, creating one if needed.
+
+```typescript
+async guestUtils.ensureGuestId(): Promise<string>
+```
+
+**Returns:** `Promise<string>` - The existing or newly created guest ID
+
+**Example:**
+
+```typescript
+import { guestUtils } from 'simple-logto'
+
+// Always returns a valid guest ID
+const guestId = await guestUtils.ensureGuestId()
+console.log('Guest ID:', guestId)
+```
+
+### guestUtils.clearGuestId
+
+Remove the guest ID cookie.
+
+```typescript
+guestUtils.clearGuestId(): void
+```
+
+**Example:**
+
+```typescript
+import { guestUtils } from 'simple-logto'
+
+// Clear guest session on user sign-in
+function handleUserSignIn() {
+  guestUtils.clearGuestId()
+  // Proceed with authentication
+}
+```
+
+## Other Utilities
+
+### validateLogtoConfig
+
+Validate Logto configuration for required fields.
+
+```typescript
+validateLogtoConfig(config: LogtoConfig): void
+```
+
+<ResponseField name="config" type="LogtoConfig" required>
+  The Logto configuration object to validate
+</ResponseField>
+
+**Throws:** `Error` if configuration is invalid or missing required fields
+
+**Example:**
+
+```typescript
+import { validateLogtoConfig } from 'simple-logto'
+import type { LogtoConfig } from '@logto/react'
+
+const config: LogtoConfig = {
+  endpoint: 'https://your-tenant.logto.app',
+  appId: 'your-app-id',
+  resources: ['https://api.example.com']
+}
+
+try {
+  validateLogtoConfig(config)
+  console.log('Config is valid')
+} catch (error) {
+  console.error('Invalid config:', error.message)
+}
+```
+
+### transformUser
+
+Transform Logto user object to a simpler format.
+
+```typescript
+transformUser(logtoUser: any): LogtoUser | null
+```
+
+<ResponseField name="logtoUser" type="any" required>
+  The raw user object from Logto
+</ResponseField>
+
+**Returns:** `LogtoUser | null` - Transformed user object, or `null` if input is invalid
+
+**Example:**
+
+```typescript
+import { transformUser } from 'simple-logto'
+
+const rawUser = {
+  sub: 'user-123',
+  name: 'John Doe',
+  email: 'john@example.com',
+  picture: 'https://example.com/avatar.jpg'
+}
+
+const user = transformUser(rawUser)
+// { id: 'user-123', name: 'John Doe', email: 'john@example.com', avatar: 'https://example.com/avatar.jpg', ... }
+```
+
+### getInitials
+
+Get initials from a name for avatar fallback.
+
+```typescript
+getInitials(name?: string): string
+```
+
+<ResponseField name="name" type="string">
+  The user's name
+</ResponseField>
+
+**Returns:** `string` - Initials (1-2 characters, uppercase)
+
+**Example:**
+
+```typescript
+import { getInitials } from 'simple-logto'
+
+getInitials('John Doe')        // 'JD'
+getInitials('Alice')           // 'AL'
+getInitials('Bob Smith Jr')    // 'BJ'
+getInitials()                  // 'U'
+```
+
+### cn
+
+Utility function to combine class names using clsx and tailwind-merge.
+
+```typescript
+cn(...inputs: ClassValue[]): string
+```
+
+<ResponseField name="inputs" type="ClassValue[]" required>
+  Class names to combine
+</ResponseField>
+
+**Returns:** `string` - Merged class names
+
+**Example:**
+
+```typescript
+import { cn } from 'simple-logto'
+
+const className = cn(
+  'base-class',
+  isActive && 'active-class',
+  { 'conditional-class': condition },
+  'another-class'
+)
+```
